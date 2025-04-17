@@ -1,16 +1,17 @@
 const express = require('express');
 const { getMassageShops, getMassageShop, createMassageShop, updateMassageShop, deleteMassageShop } = require('../controllers/massage-shops');
 
-// Include other resource rounters
+
 const appointmentRouter = require('./reservations');
+const reviewRouter = require('./reviews');
 
 const router = express.Router();
 
 const {protect, authorize} = require('../middleware/auth');
 
-// Re-route into other resoutce routers
 router.use('/:massageShopId/reservations/', appointmentRouter);
-
+    
+router.use('/:massageShopId/reviews/', reviewRouter);
 
 
 router.route('/').get(getMassageShops).post(protect, authorize('admin'), createMassageShop)

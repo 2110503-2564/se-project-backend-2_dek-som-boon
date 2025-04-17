@@ -12,24 +12,10 @@ const MassageShopSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please add an address'],
     },
-    // district: {
-    //     type: String,
-    //     required: [true, 'Please add a district'],
-    // },
-    // postalcode: {
-    //     type: String,
-    //     required: [true, 'Please add a postalcode'],
-    //     maxlength: [50, 'Postal Code can not be more than 5 digits'] 
-    // },
+
     tel: {
         type: String,
     },
-    // region: {
-    //     type: String,
-    //     required: [true, 'Please add a region'],
-    // },
-
-    // เพิ่มเวลาเปิด-ปิด
     openTime: { type: String, required: true },
     closeTime: { type: String, required: true },
 }, {
@@ -38,9 +24,16 @@ const MassageShopSchema = new mongoose.Schema({
 });
 
 
-// Reverse populate with virtuals
+
 MassageShopSchema.virtual('reservations',{
     ref: 'Reservation',
+    localField: '_id',
+    foreignField: 'massageShop',
+    justOne: false
+});
+
+MassageShopSchema.virtual('reviews', {
+    ref: 'Review',
     localField: '_id',
     foreignField: 'massageShop',
     justOne: false

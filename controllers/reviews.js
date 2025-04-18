@@ -1,35 +1,35 @@
 const Review = require('../models/Review');
 
 // @desc    Get all reviews or reviews for one massage shop
+// @route   GET /api/v1/reviews
 // @route   GET /api/v1/massage-shops/:massageShopId/reviews
 // @access  Public
 exports.getReviews = async (req, res, next) => {
-    try {
-      let query;
-  
-      if (req.params.massageShopId) {
-        query = Review.find({ massageShop: req.params.massageShopId }).populate({
-            path: "massageShop",
-            select: "name province tel",
-        });
-      } else {
-        query = Review.find().populate({
-            path: "massageShop",
-            select: "name province tel",
-        });
-      }
-  
-      const reviews = await query;
-  
-      res.status(200).json({
-        success: true,
-        count: reviews.length,
-        data: reviews
-      });
-    } catch (err) {
-      res.status(500).json({ success: false, error: err.message });
+  try {
+    let query;
+
+    if (req.params.massageShopId) {
+      query = Review.find({ massageShop: req.params.massageShopId });
+    } else {
+      query = Review.find();
     }
-  };
+
+    query = query
+      .populate({ path: 'user', select: 'name username' })
+      .populate({ path: 'massageShop', select: 'name province tel' });
+
+    const reviews = await query;
+
+    res.status(200).json({
+      success: true,
+      count: reviews.length,
+      data: reviews
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
+
   
 
 // @desc    Get single review

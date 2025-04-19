@@ -18,12 +18,12 @@ const MassageShopSchema = new mongoose.Schema({
     },
     openTime: { type: String, required: true },
     closeTime: { type: String, required: true },
+    averageRating: { type: Number, required: true, default: 0 },
+    reviewerCount: { type: Number, required: true, default: 0 },
 }, {
     toJSON: {virtuals: true},
     toObject: {virtuals: true}
 });
-
-
 
 MassageShopSchema.virtual('reservations',{
     ref: 'Reservation',

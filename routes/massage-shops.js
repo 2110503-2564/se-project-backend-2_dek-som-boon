@@ -4,6 +4,7 @@ const { getMassageShops, getMassageShop, createMassageShop, updateMassageShop, d
 
 const appointmentRouter = require('./reservations');
 const reviewRouter = require('./reviews');
+const therapistRouter = require('./therapists');
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ router.use('/:massageShopId/reservations/', appointmentRouter);
     
 router.use('/:massageShopId/reviews/', reviewRouter);
 
+router.use('/:massageShopId/therapists/', therapistRouter);
 
 router.route('/').get(getMassageShops).post(protect, authorize('admin'), createMassageShop)
 router.route('/:id').get(getMassageShop).put(protect, authorize('admin'), updateMassageShop).delete(protect, authorize('admin'), deleteMassageShop);

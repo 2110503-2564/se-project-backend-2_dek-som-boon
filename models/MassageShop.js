@@ -39,4 +39,11 @@ MassageShopSchema.virtual('reviews', {
     justOne: false
 });
 
+MassageShopSchema.virtual('therapists', {
+    ref: 'Therapist',
+    localField: '_id',
+    foreignField: 'massageShop',
+    justOne: false
+});
+
 module.exports = mongoose.model('MassageShop', MassageShopSchema);

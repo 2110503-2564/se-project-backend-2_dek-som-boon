@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const reviewSchema = new mongoose.Schema({
   score: {
     type: Number,
+    default:0,
     required: true,
     min: 0,
     max: 5,
@@ -13,9 +14,11 @@ const reviewSchema = new mongoose.Schema({
   },
   comment: {
     type: String,
-    required: true,
+    default:"no comment",
+    required: false,
     validate: {
       validator: function (value) {
+        if (!value) return true;
         const wordCount = value.trim().split(/\s+/).length;
         return wordCount <= 250;
       },

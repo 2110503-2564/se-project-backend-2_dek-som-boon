@@ -15,6 +15,11 @@ const ReservationSchema = new mongoose.Schema({
         ref: 'MassageShop',
         required: true
     },
+    therapist: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Therapist',
+        required: true
+      },
     createdAt: {
         type: Date,
         default: Date.now

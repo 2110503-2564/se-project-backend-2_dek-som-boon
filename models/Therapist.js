@@ -12,10 +12,21 @@ const TherapistSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please add a telephone number']
   },
-  age: {
-    type: Number,
-    required: [true, 'Please add age'],
-    min: [18, 'Therapist must be at least 18 years old']
+  // age: {
+  //   type: Number,
+  //   required: [true, 'Please add age'],
+  //   min: [18, 'Therapist must be at least 18 years old']
+  // },
+  birthDate: {
+    type: Date,
+    required: [true, 'Please add date of birth'],
+    validate: {
+      validator: function (value) {
+        const age = Math.floor((Date.now() - value.getTime()) / (1000 * 60 * 60 * 24 * 365.25));
+        return age >= 18;
+      },
+      message: 'Therapist must be at least 18 years old',
+    }
   },
   sex: {
     type: String,
@@ -56,5 +67,16 @@ const TherapistSchema = new mongoose.Schema({
     required: true
   }
 });
+
+TherapistSchema.virtual('age').get(function () {
+  if (!this.birthDate) return null;
+  const ageDifMs = Date.now() - this.birthDate.getTime();
+  const ageDate = new Date(ageDifMs);
+  return Math.abs(ageDate.getUTCFullYear() - 1970);
+});
+
+
+TherapistSchema.set('toJSON', { virtuals: true });
+TherapistSchema.set('toObject', { virtuals: true });
 
 module.exports = mongoose.model('Therapist', TherapistSchema);

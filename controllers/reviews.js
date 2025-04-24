@@ -60,7 +60,7 @@ exports.createReview = async (req, res, next) => {
       const review = await Review.create(req.body);
 
       // update massageshop review field
-      console.log( req.params.massageShopId)
+      // console.log( req.params.massageShopId)
       let query;
       if (req.params.massageShopId) {
         query = Review.find({ massageShop: req.params.massageShopId });

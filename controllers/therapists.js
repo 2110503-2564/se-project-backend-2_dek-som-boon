@@ -93,7 +93,6 @@ exports.deleteTherapist = async (req, res) => {
   try {
     const therapist = await Therapist.findById(req.params.id);
     const reservations = await Reservation.find({ therapist: req.params.id });
-    console.log('reservations: ', reservations);
     if (reservations.length > 0) {
       return res.status(400).json({ success: false, message: 'Cannot delete therapist with existing reservations' });
     }

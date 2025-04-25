@@ -1,5 +1,6 @@
 const Therapist = require('../models/Therapist');
 const MassageShop = require('../models/MassageShop');
+const Reservation = require('../models/Reservation');
 
 // @desc    Get all therapists or therapists for one massage shop
 // @route   GET /api/v1/therapists
@@ -91,6 +92,11 @@ exports.updateTherapist = async (req, res) => {
 exports.deleteTherapist = async (req, res) => {
   try {
     const therapist = await Therapist.findById(req.params.id);
+    const reservations = await Reservation.find({ therapist: req.params.id });
+    console.log('reservations: ', reservations);
+    if (reservations.length > 0) {
+      return res.status(400).json({ success: false, message: 'Cannot delete therapist with existing reservations' });
+    }
     if (!therapist) {
       return res.status(404).json({ success: false, message: 'Therapist not found' });
     }

@@ -4,7 +4,8 @@
   "description": "[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/0yK2PP-x)",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "test-coverage": "jest --coverage --watchAll",
     "dev": "nodemon server.js"
   },
   "author": "",
@@ -21,9 +22,12 @@
     "helmet": "^8.0.0",
     "hpp": "^0.2.3",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.10.1"
+    "mongodb-memory-server": "^10.1.4",
+    "mongoose": "^8.10.1",
+    "supertest": "^7.1.0"
   },
   "devDependencies": {
+    "jest": "^29.7.0",
     "nodemon": "^3.1.9"
   }
 }

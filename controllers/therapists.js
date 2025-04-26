@@ -61,7 +61,7 @@ exports.createTherapist = async (req, res) => {
     const therapist = await Therapist.create(req.body);
     res.status(201).json({ success: true, data: therapist });
   } catch (err) {
-    res.status(400).json({ success: false, error: err.message });
+    res.status(500).json({ success: false, error: err.message });
   }
 };
 
@@ -82,7 +82,7 @@ exports.updateTherapist = async (req, res) => {
 
     res.status(200).json({ success: true, data: therapist });
   } catch (err) {
-    res.status(400).json({ success: false, error: err.message });
+    res.status(500).json({ success: false, error: err.message });
   }
 };
 

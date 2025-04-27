@@ -18,6 +18,17 @@ exports.getTherapists = async (req, res) => {
 
     query = query.populate({ path: 'massageShop', select: 'name address tel' });
 
+    // Check date
+    const { date } = req.query;
+    if (date) {
+      const inputDate = new Date(date);
+      const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const dayName = daysOfWeek[inputDate.getUTCDay()];
+
+      query = query.where('available').in([dayName]);
+    }
+    //
+
     const therapists = await query;
 
     res.status(200).json({
@@ -29,6 +40,7 @@ exports.getTherapists = async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 };
+
 
 // @desc    Get single therapist
 // @route   GET /api/v1/therapists/:id

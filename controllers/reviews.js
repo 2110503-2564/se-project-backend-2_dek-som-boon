@@ -196,12 +196,12 @@ exports.deleteReview = async (req, res, next) => {
       }
       return countScore;
     }
-
+    // console.log(reviews.length)
     const shop = await MassageShop.findByIdAndUpdate(
       review.massageShop.toString(),
       { 
         reviewerCount: reviews.length,
-        averageRating: totalScore(reviews) / reviews.length,
+        averageRating: (reviews.length != 0) ? (totalScore(reviews) / reviews.length) : (0),
       },
       { new: true, runValidators: true }
     );

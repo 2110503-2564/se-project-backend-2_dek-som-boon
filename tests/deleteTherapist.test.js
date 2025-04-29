@@ -168,4 +168,25 @@ describe('deleteTherapist', () => {
             );
         });
     });
+
+    describe('Virtual properties', () => {
+        it('should correctly calculate age from birthDate', async () => {
+            const birthDate = new Date('1985-04-25T00:00:00.000Z');
+            const mockTherapist = new Therapist({
+                name: 'John Doe',
+                tel: '123-456-7890',
+                birthDate: birthDate,
+                sex: 'male',
+                specialty: ['Swedish Massage'],
+                available: ['Monday'],
+                massageShop: new mongoose.Types.ObjectId(),
+            });
+            await mockTherapist.save();
+
+            const foundTherapist = await Therapist.findById(mockTherapist._id).exec();
+            const expectedAge = new Date().getFullYear() - birthDate.getFullYear();
+            expect(foundTherapist.age).toBe(expectedAge);
+        });
+    });
+
 });
